@@ -163,10 +163,6 @@ def create_venue_submission():
               data['name'] + ' could not be listed.')
     return render_template('pages/home.html')
 
-    # TODO: on unsuccessful db insert, flash an error instead.
-    # e.g., flash('An error occurred. Venue ' + data.name + ' could not be listed.')
-    # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
-
 
 @ app.route('/venues/<venue_id>', methods=['DELETE'])
 def delete_venue(venue_id):
@@ -183,17 +179,12 @@ def delete_venue(venue_id):
 
 @ app.route('/artists')
 def artists():
-    # TODO: replace with real data returned from querying the database
-    data=[{
-        "id": 4,
-        "name": "Guns N Petals",
-    }, {
-        "id": 5,
-        "name": "Matt Quevedo",
-    }, {
-        "id": 6,
-        "name": "The Wild Sax Band",
-    }]
+    artists = Artist.query.all()
+    data = []
+    
+    for artist in artists:
+        data.append(artist)
+
     return render_template('pages/artists.html', artists=data)
 
 
