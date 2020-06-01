@@ -33,6 +33,22 @@ class Venue(db.Model):
     def __repr__(self):
         return f'<Venue Id: {self.id} Name: {self.name}>'
 
+    def dictionary(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'city': self.city,
+            'state': self.state,
+            'address': self.address,
+            'phone': self.phone,
+            'image_link': self.image_link,
+            'facebook_link': self.facebook_link,
+            'genres': self.genres,
+            'website': self.website,
+            'seeking_talent': self.seeking_talent,
+            'seeking_description': self.seeking_description,
+            
+        }
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
@@ -55,6 +71,22 @@ class Artist(db.Model):
     def __repr__(self):
         return f'<Artist Id: {self.id} Name: {self.name}>'
 
+    def dictionary(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'city': self.city,
+            'state': self.state,
+            'phone': self.phone,
+            'image_link': self.image_link,
+            'facebook_link': self.facebook_link,
+            'genres': self.genres,
+            'website': self.website,
+            'seeking_venue': self.seeking_venue,
+            'seeking_description': self.seeking_description,
+            
+        }
+
 class Show(db.Model):
     __tablename__ = 'Show'
 
@@ -63,3 +95,32 @@ class Show(db.Model):
     venue_id = db.Column(db.Integer, db.ForeignKey("Venue.id"), nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
    
+    def show_dict(self):
+        return {
+            "id": self.id,
+            "artist_id": self.artist_id,
+            "venue_id": self.venue_id,
+            "start_time": str(self.start_time),
+            'artist_name': self.Artist.name,
+            'artist_image_link': self.Artist.image_link,
+            'venue_name': self.Venue.name,
+            'venue_image_link': self.Venue.image_link,
+        }
+
+    def show_artist(self):
+       return {
+           'artist_id': self.artist_id,
+           'artist_name': self.Artist.name,
+           'artist_image_link': self.Artist.image_link,
+           'start_time': self.start_time
+       }
+
+    def show_venue(self):
+        return {
+            'venue_id': self.venue_id,
+            'venue_name': self.Venue.name,
+            'venue_image_link': self.Venue.image_link,
+            'start_time': self.start_time
+        }
+
+
