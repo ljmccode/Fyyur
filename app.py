@@ -13,7 +13,7 @@ from logging import Formatter, FileHandler
 from flask_wtf import Form
 from forms import *
 from flask_migrate import Migrate
-from models import Venue, Artist, Show
+from models import db, Venue, Artist, Show
 import sys
 import babel
 
@@ -24,7 +24,8 @@ import babel
 app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config')
-db = SQLAlchemy(app)
+db.init_app(app)
+migrate = Migrate(app, db)
 
 #----------------------------------------------------------------------------#
 # Filters.
@@ -212,6 +213,7 @@ def show_artist(artist_id):
     artist = Artist.query.get(artist_id)
     data = artist.dictionary()
 
+    
     past = list(filter(lambda x: x.start_time < datetime.now(), artist.shows))
     upcoming = list(filter(lambda x: x.start_time >= datetime.now(), artist.shows))
     past_shows = list(map(lambda x: x.show_venue(), past))

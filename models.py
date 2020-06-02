@@ -2,16 +2,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_moment import Moment
-
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
+db = SQLAlchemy()
 
-
-app = Flask(__name__)
-moment = Moment(app)
-app.config.from_object('config')
-db = SQLAlchemy(app)
 
 class Venue(db.Model):
     __tablename__ = 'Venue'
@@ -122,5 +117,3 @@ class Show(db.Model):
             'venue_image_link': self.Venue.image_link,
             'start_time': str(self.start_time)
         }
-
-
