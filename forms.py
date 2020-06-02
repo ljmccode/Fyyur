@@ -121,8 +121,8 @@ class VenueForm(Form):
     website = StringField(
         'website', validators=[URL()]
     )
-    seeking_talent = StringField(
-        'seeking_talent'
+    seeking_talent = BooleanField(
+        'seeking_talent', false_values=("False", "false", 0, "0")
     )
     seeking_description = TextAreaField(
         'seeking_description'
@@ -232,9 +232,9 @@ class ArtistForm(Form):
         # TODO implement enum restriction
         'website', validators=[URL()]
     )
-    seeking_venue = StringField(
+    seeking_venue = BooleanField(
         # TODO implement enum restriction
-        'seeking_venue'
+        'seeking_venue', false_values=("False", "false", 0, "0")
     )
     seeking_description = TextAreaField(
         # TODO implement enum restriction
