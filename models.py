@@ -82,8 +82,9 @@ class Artist(db.Model):
             'seeking_description': self.seeking_description
         }
 
-        def update(self):
-            db.session.commit()
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
 class Show(db.Model):
     __tablename__ = 'Show'

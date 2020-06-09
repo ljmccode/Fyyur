@@ -366,6 +366,24 @@ def edit_artist_submission(artist_id):
 
     return redirect(url_for('show_artist', artist_id=artist_id))
 
+# Delete Artist
+@ app.route('/artists/<int:artist_id>', methods=['POST'])
+def delete_artist(artist_id):
+    try:
+        shows = Show.query.filter_by(artist_id=artist_id)
+        for show in shows:
+            show.delete()
+
+        artist = Artist.query.get(artist_id)
+        artist.delete()
+        flash('Artist deleted!')
+        return render_template('pages/home.html')
+    except():
+        error=True
+        db.session.rollback()
+        flash('An error occured. Artist could not be deleted')
+    return None
+
 #----------------------------------------------------------------------------#
 #  Shows
 #----------------------------------------------------------------------------#
