@@ -229,12 +229,19 @@ def artists():
 # Create Artist Form
 @ app.route('/artists/create', methods=['GET'])
 def create_artist_form():
-    form=ArtistForm()
+    form=ArtistForm(meta={"csrf": False})
     return render_template('forms/new_artist.html', form=form)
 
 #Create Artist
 @ app.route('/artists/create', methods=['POST'])
 def create_artist_submission():
+    form=ArtistForm(meta={"csrf": False})
+
+    if not form.validate_on_submit():
+        errors = form.errors
+        for error in errors.values():
+            flash( error[0] )
+        return redirect(url_for('create_artist_form'))
     error=False
     data=request.form
 
