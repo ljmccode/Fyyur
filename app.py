@@ -97,6 +97,15 @@ def create_venue_form():
 # Create Venue
 @ app.route('/venues/create', methods=['POST'])
 def create_venue_submission():
+    form=VenueForm(meta={"csrf": False})
+
+    # Error Handling
+    if not form.validate_on_submit():
+        errors = form.errors
+        for error in errors.values():
+            flash( error[0] )
+        return redirect(url_for('create_venue_form'))
+
     error=False
     data=request.form
 
@@ -167,6 +176,15 @@ def edit_venue(venue_id):
 # Update Venue
 @ app.route('/venues/<int:venue_id>/edit', methods=['POST'])
 def edit_venue_submission(venue_id):
+    
+    form=VenueForm(meta={"csrf": False})
+    # Error Handling
+    if not form.validate_on_submit():
+        errors = form.errors
+        for error in errors.values():
+            flash( error[0] )
+        return redirect(url_for('edit_venue', venue_id=venue_id))
+    
     error = False
     data=request.form
     venue = Venue.query.filter(Venue.id == venue_id).one_or_none()
@@ -236,7 +254,7 @@ def create_artist_form():
 @ app.route('/artists/create', methods=['POST'])
 def create_artist_submission():
     form=ArtistForm(meta={"csrf": False})
-
+    # Error Handling
     if not form.validate_on_submit():
         errors = form.errors
         for error in errors.values():
@@ -305,7 +323,7 @@ def search_artists():
 # Update Artist Form
 @ app.route('/artists/<int:artist_id>/edit', methods=['GET'])
 def edit_artist(artist_id):
-    form=ArtistForm()
+    form=ArtistForm(meta={"csrf": False})
     artist = Artist.query.get(artist_id).dictionary()
 
     return render_template('forms/edit_artist.html', form=form, artist=artist)
@@ -313,9 +331,18 @@ def edit_artist(artist_id):
 # Update Artist
 @ app.route('/artists/<int:artist_id>/edit', methods=['POST'])
 def edit_artist_submission(artist_id):
+
+    # Error Handling
+    form=ArtistForm(meta={"csrf": False})
+    if not form.validate_on_submit():
+        errors = form.errors
+        for error in errors.values():
+            flash( error[0] )
+        return redirect(url_for('edit_artist', artist_id=artist_id))
+    
+    artist = Artist.query.filter(Artist.id == artist_id).one_or_none()
     error = False
     data=request.form
-    artist = Artist.query.filter(Artist.id == artist_id).one_or_none()
 
     try:
         artist.name=data.get('name'),
