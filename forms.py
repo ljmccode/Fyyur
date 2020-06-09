@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask_wtf import Form
+from flask_wtf import Form, FlaskForm
 from wtforms import StringField, BooleanField, SelectField, TextAreaField, SelectMultipleField, DateTimeField, IntegerField
 from wtforms.validators import DataRequired, AnyOf, URL, Length
 
@@ -85,16 +85,15 @@ class VenueForm(Form):
         'address', validators=[DataRequired()]
     )
     phone = StringField(
-        'phone', validators=[DataRequired(), Length(min=10, max=10)]
+        'phone', validators=[DataRequired(), Length(min=10, max=10 , message="Phone number must be 10 numbers long")]
     )
     image_link = StringField(
-        'image_link', validators=[URL()]
+        'image_link', validators=[URL(message="Must be  valid URL")]
     )
     facebook_link = StringField(
-        'facebook_link', validators=[URL()]
+        'facebook_link', validators=[URL(message="Must be  valid URL")]
     )
     genres = SelectMultipleField(
-        # TODO implement enum restriction
         'genres', validators=[DataRequired()],
         choices=[
             ('Alternative', 'Alternative'),
@@ -119,7 +118,7 @@ class VenueForm(Form):
         ]
     )
     website = StringField(
-        'website', validators=[URL()]
+        'website', validators=[URL(message="Must be  valid URL")]
     )
     seeking_talent = BooleanField(
         'seeking_talent', false_values=("False", "false", 0, "0")
@@ -193,13 +192,12 @@ class ArtistForm(Form):
         ]
     )
     phone = StringField(
-        'phone', validators=[DataRequired(), Length(min=10, max=10)]
+        'phone', validators=[DataRequired(), Length(min=10, max=12, message="Phone number must be 10 numbers long")]
     )
     image_link = StringField(
-        'image_link', validators=[URL()]
+        'image_link', validators=[URL(message="Must be  valid URL")]
     )
     genres = SelectMultipleField(
-        # TODO implement enum restriction
         'genres', validators=[DataRequired()],
         choices=[
             ('Alternative', 'Alternative'),
@@ -225,18 +223,16 @@ class ArtistForm(Form):
     )
     facebook_link = StringField(
         # TODO implement enum restriction
-        'facebook_link', validators=[URL()]
+        'facebook_link', validators=[URL(message="Must be  valid URL")]
     )
     website = StringField(
         # TODO implement enum restriction
-        'website', validators=[URL()]
+        'website', validators=[URL(message="Must be  valid URL")]
     )
     seeking_venue = BooleanField(
-        # TODO implement enum restriction
         'seeking_venue', false_values=("False", "false", 0, "0")
     )
     seeking_description = TextAreaField(
-        # TODO implement enum restriction
         'seeking_description'
     )
 
