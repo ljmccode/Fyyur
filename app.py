@@ -107,8 +107,8 @@ def show_venue(venue_id):
 
     past = list(filter(lambda x: x.start_time < datetime.now(), venue.shows))
     upcoming = list(filter(lambda x: x.start_time >= datetime.now(), venue.shows))
-    past_shows = list(map(lambda x: x.show_artist(), past))
-    upcoming_shows= list(map(lambda x: x.show_artist(), upcoming))
+    past_shows = list(map(lambda x: x.show_info(), past))
+    upcoming_shows= list(map(lambda x: x.show_info(), upcoming))
 
     # add upcoming/past show info to data dictionary
     data["past_shows"]= past_shows
@@ -202,8 +202,8 @@ def show_artist(artist_id):
     
     past = list(filter(lambda x: x.start_time < datetime.now(), artist.shows))
     upcoming = list(filter(lambda x: x.start_time >= datetime.now(), artist.shows))
-    past_shows = list(map(lambda x: x.show_venue(), past))
-    upcoming_shows= list(map(lambda x: x.show_venue(), upcoming))
+    past_shows = list(map(lambda x: x.show_info(), past))
+    upcoming_shows= list(map(lambda x: x.show_info(), upcoming))
 
     # add upcoming/past show info to data dictionary
     data["past_shows"]= past_shows
@@ -319,7 +319,7 @@ def create_artist_submission():
 @ app.route('/shows')
 def shows():
     shows = Show.query.all()
-    data = list(map(Show.show_dict, shows))
+    data = list(map(Show.show_info, shows))
     return render_template('pages/shows.html', shows=data)
 
 

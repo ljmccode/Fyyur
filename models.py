@@ -90,7 +90,7 @@ class Show(db.Model):
     venue_id = db.Column(db.Integer, db.ForeignKey("Venue.id"), nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
    
-    def show_dict(self):
+    def show_info(self):
         return {
             "id": self.id,
             "artist_id": self.artist_id,
@@ -102,18 +102,18 @@ class Show(db.Model):
             'venue_image_link': self.Venue.image_link,
         }
 
-    def show_artist(self):
-       return {
-           'artist_id': self.artist_id,
-           'artist_name': self.Artist.name,
-           'artist_image_link': self.Artist.image_link,
-           'start_time': str(self.start_time)
-       }
+    # def show_artist(self):
+    #    return {
+    #        'artist_id': self.artist_id,
+    #        'artist_name': self.Artist.name,
+    #        'artist_image_link': self.Artist.image_link,
+    #        'start_time': str(self.start_time)
+    #    }
 
-    def show_venue(self):
-        return {
-            'venue_id': self.venue_id,
-            'venue_name': self.Venue.name,
-            'venue_image_link': self.Venue.image_link,
-            'start_time': str(self.start_time)
-        }
+    # def show_venue(self):
+    #     return {
+    #         'venue_id': self.venue_id,
+    #         'venue_name': self.Venue.name,
+    #         'venue_image_link': self.Venue.image_link,
+    #         'start_time': str(self.start_time)
+    #     }
