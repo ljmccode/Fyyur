@@ -41,8 +41,7 @@ class Venue(db.Model):
             'genres': self.genres,
             'website': self.website,
             'seeking_talent': self.seeking_talent,
-            'seeking_description': self.seeking_description,
-            
+            'seeking_description': self.seeking_description
         }
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
@@ -66,6 +65,9 @@ class Artist(db.Model):
     def __repr__(self):
         return f'<Artist Id: {self.id} Name: {self.name}>'
 
+    def update(self):
+        db.session.commit()
+
     def dictionary(self):
         return {
             'id': self.id,
@@ -78,8 +80,7 @@ class Artist(db.Model):
             'genres': self.genres,
             'website': self.website,
             'seeking_venue': self.seeking_venue,
-            'seeking_description': self.seeking_description,
-            
+            'seeking_description': self.seeking_description
         }
 
 class Show(db.Model):
@@ -99,7 +100,7 @@ class Show(db.Model):
             'artist_name': self.Artist.name,
             'artist_image_link': self.Artist.image_link,
             'venue_name': self.Venue.name,
-            'venue_image_link': self.Venue.image_link,
+            'venue_image_link': self.Venue.image_link
         }
 
     # def show_artist(self):
