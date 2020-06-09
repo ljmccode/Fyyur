@@ -45,6 +45,9 @@
 	<div class="col-sm-6">
 		<img src="{{ venue.image_link }}" alt="Venue Image" />
 	</div>
+	<form class="col-sm-3" action="{{ url_for('delete_venue', venue_id=venue.id) }}" method=post>
+		<input type="submit" value="Delete Venue" class="btn btn-primary btn-lg btn-block">
+	</form>
 </div>
 <section>
 	<h2 class="monospace">{{ venue.upcoming_shows_count }} Upcoming {% if venue.upcoming_shows_count == 1 %}Show{% else %}Shows{% endif %}</h2>

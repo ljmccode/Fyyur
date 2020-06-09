@@ -43,6 +43,9 @@ class Venue(db.Model):
             'seeking_talent': self.seeking_talent,
             'seeking_description': self.seeking_description
         }
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
@@ -103,6 +106,9 @@ class Show(db.Model):
             'venue_image_link': self.Venue.image_link
         }
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
     # def show_artist(self):
     #    return {
     #        'artist_id': self.artist_id,

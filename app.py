@@ -139,7 +139,7 @@ def create_venue_submission():
             city=data.get('city'),
             state=data.get('state'),
             address=data.get('address'),
-            phone=data.get('phone'),
+            phone=str(data.get('phone')),
             image_link=data.get('image_link'),
             facebook_link=data.get('facebook_link'),
             genres=data.getlist('genres'),
@@ -159,13 +159,26 @@ def create_venue_submission():
     return render_template('pages/home.html')
 
 
-@ app.route('/venues/<venue_id>', methods=['DELETE'])
+@ app.route('/venues/<int:venue_id>', methods=['POST'])
 def delete_venue(venue_id):
     # TODO: Complete this endpoint for taking a venue_id, and using
     # SQLAlchemy ORM to delete a record. Handle cases where the session commit could fail.
 
     # BONUS CHALLENGE: Implement a button to delete a Venue on a Venue Page, have it so that
     # clicking that button delete it from the db then redirect the user to the homepage
+    try:
+        shows = Show.query.filter_by(venue_id=venue_id)
+        for show in shows:
+            show.delete()
+
+        venue = Venue.query.get(venue_id)
+        venue.delete()
+        flash('Venue deleted!')
+        return render_template('pages/home.html')
+    except():
+        error=True
+        db.session.rollback()
+        flash('An error occured. Venue could not be deleted')
     return None
 
 #  Artists
@@ -235,7 +248,7 @@ def edit_artist_submission(artist_id):
         artist.name=data.get('name'),
         artist.city=data.get('city'),
         artist.state=data.get('state'),
-        artist.phone=data.get('phone'),
+        artist.phone=str(data.get('phone')),
         artist.image_link=data.get('image_link'),
         artist.facebook_link=data.get('facebook_link'),
         artist.genres=data.getlist('genres'),
@@ -273,7 +286,7 @@ def edit_venue_submission(venue_id):
         venue.city=data.get('city'),
         venue.state=data.get('state'),
         venue.address=data.get('address'),
-        venue.phone=data.get('phone'),
+        venue.phone=str(data.get('phone')),
         venue.image_link=data.get('image_link'),
         venue.facebook_link=data.get('facebook_link'),
         venue.genres=data.getlist('genres'),
@@ -311,7 +324,7 @@ def create_artist_submission():
             name=data.get('name'),
             city=data.get('city'),
             state=data.get('state'),
-            phone=data.get('phone'),
+            phone=str(data.get('phone')),
             image_link=data.get('image_link'),
             facebook_link=data.get('facebook_link'),
             genres=data.getlist('genres'),
