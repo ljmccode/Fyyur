@@ -7,7 +7,7 @@ Fyyur is a musical venue and artist booking site that facilitates the discovery 
 
 ### Tech Stack
 
-Tech stack will includes:
+Tech stack includes:
 
 * **SQLAlchemy ORM** to be our ORM library of choice
 * **PostgreSQL** as our database of choice
